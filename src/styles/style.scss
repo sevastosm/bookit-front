@@ -1,7 +1,4 @@
 @import "config";
-@import "fonts";
-@import "list";
-@import "modal";
 
 //Resets
 body * {
@@ -12,7 +9,8 @@ body * {
 }
 a {
   text-decoration: none;
-  color: $primary-color;
+  color: $secontary-color;
+  cursor: pointer;
 }
 
 ul {
@@ -113,4 +111,3 @@ ul li {
 
 
 
-@import "mediaq";
