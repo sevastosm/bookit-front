@@ -8,7 +8,7 @@
     "start": "webpack-dev-server --open",
     "build": "webpack",
     "predeploy": "npm run build",
-   "deploy": "gh-pages -d build"
+   "deploy":  "gh-pages -d tree -b master"
   },
   "author": "Sevastos Matzouranis",
   "license": "ISC",
