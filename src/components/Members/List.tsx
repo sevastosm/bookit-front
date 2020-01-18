@@ -1,14 +1,15 @@
 import * as React from "react";
 import Item from "./Item";
-import { fetchMembers } from "../../helpers/apicalls";
+import { fetchMembers, AddMember } from "../../helpers/apicalls";
 import ItemDetails from "./Itemdetails";
+import MaterialTableComponent from "../UI/MaterialTable";
 
 interface IAppProps {}
 
 const List: React.FC<IAppProps> = props => {
   const [members, setMembers] = React.useState([]);
   const [itemForm, setItemForm] = React.useState(false);
-  const [formStatus, setFormStatus] = React.useState('add');
+  const [formStatus, setFormStatus] = React.useState("add");
   const [selectedMember, setselectedMember] = React.useState({});
 
   // Similar to componentDidMount and componentDidUpdate:
@@ -19,13 +20,26 @@ const List: React.FC<IAppProps> = props => {
 
   const fetchData = () =>
     fetchMembers().then(response => {
-      setMembers(response.data);
+      let columns = [];
+      let data = [];
+      Object.keys(response.data[0]).map((key, i) => {
+        columns.push({ title: key.toUpperCase(), field: key });
+      });
+      response.data.map((d, i) => {
+       data.push(d);
+      });
+      let setData = {
+        columns: columns,
+        data: data
+      };
+      setMembers(setData);
     });
 
   const handleAdditem = e => {
     e.preventDefault();
     setItemForm(true);
-    setFormStatus('add')
+    setFormStatus("add");
+    AddMember();
   };
 
   const handleSelectedItem = (id: string) => {
@@ -33,49 +47,23 @@ const List: React.FC<IAppProps> = props => {
       return member.MembersID === id;
     });
     console.log("SelectedItem", selectedItem);
-    setFormStatus('edit')
+    setFormStatus("edit");
     setselectedMember(selectedItem[0]);
     setItemForm(true);
-
   };
 
   return (
     <div>
       {members ? (
-        <table style={{ width: "100%", textAlign: "center" }}>
-          <thead>
-          <tr>
-            <th>Actions</th>
-            <th>SurName</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Status</th>
-          </tr></thead>
-          <tbody>
-          {members.map((member: any) => {
-            return (
-              <Item
-                key={member.MembersID}
-                editItem={handleSelectedItem}
-                data={member}
-              />
-            );
-          })}
-          <tr>
-            <td>
-              <button onClick={handleAdditem}>+</button>
-            </td>
-          </tr></tbody>
-        </table>
+        <MaterialTableComponent members={members} />
       ) : (
         <div>Loading Data..</div>
       )}
 
-      {itemForm ? (
+      {/* {itemForm ? (
      <ItemDetails members={members[0]} member={selectedMember} status={formStatus} />
-      ) : null}
-      </div>
+      ) : null} */}
+    </div>
   );
 };
 

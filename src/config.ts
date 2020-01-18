@@ -1,1 +1,1 @@
-export const appUrl:string = 'https://rickandmortyapi.com/api/'
+export const appUrl:string = 'https://api.rem4you.com'
