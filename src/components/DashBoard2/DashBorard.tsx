@@ -114,7 +114,9 @@ const useStyles = makeStyles((theme:Theme) => ({
   },
 }));
 
-export default function Dashboard() {
+interface IAppProps {}
+const Dashboard: React.FC<IAppProps> = props => {
+  console.log("PROPS",props)
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -123,8 +125,6 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -183,3 +183,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+export default Dashboard;
