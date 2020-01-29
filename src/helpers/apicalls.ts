@@ -2,10 +2,10 @@ import 'babel-polyfill'
 import axios from 'axios'
 import { appUrl } from "../config";
 
-let params1 = {SearchValue: "test",BOption: 1,DFrom: "12/31/2015",DTo: "12/31/2018",TakeRecs:0,Id:0,LastId:0}
+let params1 = {SearchValue: "",BOption: 0,DFrom: "1/1/2020",DTo: "12/31/2020",TakeRecs:1,Id:'',LastId:0}
 
 export const  fetchMembers= async ()=>{
-    const response = await axios.get(`http://bookitapi.netshops.gr/members/obj`,
+    const response = await axios.get(`${appUrl}/members/obj`,
     {
         params: {
             pars: params1
@@ -15,5 +15,15 @@ export const  fetchMembers= async ()=>{
 }
 
 
-// fetchMembers().then((response:any)=>{
-//     console.info(response) })
+export const  AddMember= async (data)=>{
+
+    let member = data
+    await axios.post(`${appUrl}/member/register`, member)
+      .then(function (response) {
+        console.log("res",response);
+      })
+      .catch(function (error) {
+        console.log("err",error);
+      });
+
+}
